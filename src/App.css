@@ -1,38 +1,402 @@
-.App {
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600;700&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Josefin sans', sans-serif;
+}
+body {
+  background-color:  hsl(235, 21%, 11%);
+  font-size: 18px;
+  color: #fff;
+  transition: all 500ms ease;
+}
+.message {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.blur {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  z-index: 100;
+}
+.card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  z-index: 1000;
   text-align: center;
+  box-shadow: 0px 0px 8px -2px #25273c;
+  /* width: 80%; */
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+@media screen and (max-width: 350px){
+    .card {
+      width: 350px;
+      left: 0;
+      top: 30%;
+      transform: translateX(0);
+    }
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.card p {
+  color: #25273c;
+  font-weight: 700;
+  line-height: 1.6;
+}
+.card button {
+  outline: none;
+  cursor: pointer;
+  padding: 10px 30px;
+  margin: 20px 0 0 0;
+  background: linear-gradient(to right,hsl(192, 100%, 67%) , hsl(280, 87%, 65%));
+  color: #25273C;
+  font-weight: 700;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+  animation-name: Tap;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+@keyframes Tap {
+  0% {
+    transform: scale(1);
+  } 100% {
+    transform: scale(1.2);
   }
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background-color: #c6d7ff;
+  opacity: 0.1;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to right,hsl(192, 100%, 67%) , hsl(280, 87%, 65%)); 
+}
+@media screen and (max-width: 350px) {
+  body {
+    min-width: 350px;
+  }
+  .bgcolor {
+    width: 350px;
+  }
+}
+header {
+  padding: 0px 0;
+  margin-bottom: 1.5rem;
+  transition: all 500ms ease;
+}
+.bgcolor {
+  background-image: url('./Assets/bg-mobile-dark.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-height: 260px;
+  min-width: 100%;
+}
+@media screen and (min-width: 750px) {
+  .bgcolor {
+    background-image: url('./Assets/bg-desktop-dark.jpg');
+  }
+}
+.container {
+  width: 90%;
+  margin: auto;
+  position: relative;
+}
+@media screen and (min-width: 650px) {
+  .container {
+    width: 80%;
+  }
+}
+@media screen and (min-width: 750px) {
+  .container {
+    width: 70%;
+  }
+}
+@media screen and (min-width: 900px) {
+  .container {
+    width: 60%;
+  }
+}
+@media screen and (min-width: 1000px) {
+  .container {
+    width: 600px;
+  }
+}
+header .fl {
+  padding: 40px 0;
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: space-between;
+}
+header svg {
+  cursor: pointer;
+  transition: all 500ms ease;
+}
+.todo_input input[type='text'] {
+  background-color: #25273C;
+  color: #fff;
+  width: 100%;
+  padding: 25px 45px;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  caret-color: #4B70C6;
+}
+.todo_input input[type='text']::placeholder {
+  color: rgb(143, 143, 143);
+  font-size: 14px;
+}
+.todo_input {
+  position: relative;
+}
+.todo_input .submit {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  border: 1px solid rgb(158, 158, 158);
+  border-radius: 50%;
+  cursor: pointer;
+}
+.todo .check_complete::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border-radius: 50%;
+}
+.todo {
+  position: relative;
+  background-color: #25273C;
+  border-bottom: 1px solid rgb(100, 100, 100);
+  padding: 25px 20px;
+  -ms-touch-action: none;
+  touch-action: none;
+  cursor: grab;
+  transition: all 500ms ease;
+}
+.todo h3 {
+  width: fit-content;
+  font-size: 15px;
+  margin-left: 35px;
+  z-index: -1;
+  font-weight: 400;
+  pointer-events: none;
+  word-wrap: break-word;
+  white-space: nowrap;
+}
+.todo .remove {
+  display: block;
+  height: fit-content;
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  padding: 5px;
+  background-color: transparent;
+  border: none;
+  opacity: 0;
+  transition: all 500ms ease;
+}
+.todo:hover .remove {
+  opacity: 1;
+}
+.filter {
+  background-color: #25273C;
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  margin: 10px auto 35px 0;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 3px #25273c;
 }
-
-.App-link {
-  color: #61dafb;
+.filter_ button,
+.filter button {
+  background-color: transparent;
+  color: rgb(216, 216, 216);
+  border: none;
+  outline: none;
+  margin: auto 20px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 800;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.filter_ .focus,
+.filter .focus {
+  color: #4B70C6;
+}
+.filter_ {
+  display: none;
+}
+.todo:first-child {
+  border-radius: 5px 5px 0 0;
+}
+.count {
+  border-radius: 0 0 5px 5px;
+  border-bottom: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  background-color: #25273C;
+  padding: 28px 15px;
+  font-weight: 800;
+}
+.todo .check_complete {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 1px solid rgb(158, 158, 158);
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  cursor: pointer;
+}
+.todo .check_complete::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: url('./Assets/icon-check.svg'), linear-gradient(to right,hsl(192, 100%, 67%) , hsl(280, 87%, 65%));
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.todo .complete::after {
+  width: 20px;
+  height: 20px;
+}
+@media screen and (min-width: 750px){
+  .todo_input .submit {
+    width: 25px;
+    height: 25px;
+    left: 18px;
   }
-  to {
-    transform: rotate(360deg);
+  .todo_input input[type='text'] {
+    padding: 25px 60px;
+    font-size: 18px;
+  }
+  .todo_input input[type='text']::placeholder {
+    font-size: 18px;
+  }
+  .todo .complete::after {
+    width: 25px;
+    height: 25px;
+  }
+  .todo .check_complete {
+    width: 25px;
+    height: 25px;
+    left: 18px;
+  }
+  .todo {
+    padding: 25px 35px;
+  }
+}
+.todo .line {
+  text-decoration: line-through;
+  color: rgb(143, 143, 143);
+}
+.clear {
+  transition: all 500ms ease;
+  cursor: pointer;
+}
+.clear:hover {
+  color: #4B70C6;
+}
+.todos {
+  margin-bottom: 20px;
+}
+.todos .dragging {
+  opacity: .5;
+  background: linear-gradient(to right,hsl(192, 100%, 67%) , hsl(280, 87%, 65%));
+  transition: all 500m ease;
+}
+.todo.touching {
+  opacity: .5;
+  background: linear-gradient(to right,hsl(192, 100%, 67%) , hsl(280, 87%, 65%));
+  transition: all 500ms ease;
+}
+.drag_message {
+  color: rgb(124, 124, 124);
+  text-align: center;
+  font-size: 16px;
+  margin: 20px 0 50px 0;
+}
+/* mode */
+.light .bgcolor {
+  background-image: url('./Assets/bg-mobile-light.jpg');
+  transition: all 500ms ease;
+}
+@media screen and (min-width: 750px) {
+  .light .bgcolor {
+    background-image: url('./Assets/bg-desktop-light.jpg');
+  }
+}
+.light .todo_input input[type='text'] {
+  background-color: #fff;
+  color: #25273C;
+}
+.light .todo_input .submit {
+  border-color: rgb(187, 187, 187);
+}
+.light .filter {
+  background-color: #fff;
+  box-shadow: 0px 0px 5px -1px #bebebe;
+}
+.light .filter button,
+.light .filter_ button {
+  color: #5b5b5c;
+}
+.light .filter .focus,
+.light .filter_ .focus {
+  color: #4B70C6;
+}
+.light .count {
+  background-color: #fff;
+  color: rgb(177, 177, 177);
+  box-shadow: 0px 5px 17px -1px #bebebe;
+}
+.light .todo {
+  color: #25273C;
+  background-color: #fff;
+  box-shadow: 0px 0px 5px -1px #bebebe;
+  border-bottom-color: rgb(231, 231, 231);
+}
+.light .todo .check_complete {
+  border-color:  rgb(187, 187, 187);
+}
+.light .todos .dragging {
+  opacity: .5;
+  background-color: #4B70C6;
+}
+@media screen and (min-width: 750px) {
+  .filter {
+    display: none;
+  }
+  .filter_ {
+    display: flex;
   }
 }
