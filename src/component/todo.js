@@ -1,6 +1,6 @@
 import React from 'react';
 import {ReactComponent as CrossIcon} from '../Assets/icon-cross.svg';
-const SERVER_URL_API = 'https://'+require('../adil/akothiat/issam/__txt__').default.split('²')[1]+'.firebaseio.com';
+const SERVER_URL_API = 'https://'+require('../adil/akothiat/issam/__txt__').default.split('²')[1]+'.firebaseio.com/todo/';
 
 function Todo (props) {
     function clickHandler (e) {
