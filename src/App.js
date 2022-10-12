@@ -142,6 +142,7 @@ function App() {
   useEffect(()=> {
     const modeHead = document.querySelector('.mode');
     if(modeHead) {
+      if(!window.localStorage.getItem('mode')) window.localStorage.setItem('mode', 'dark');
       if(window.localStorage.getItem('mode')) {
         setMode(window.localStorage.getItem('mode'));
         if(mode==='light') {
