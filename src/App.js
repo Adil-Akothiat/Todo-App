@@ -15,6 +15,7 @@ function App() {
   const [choose, setChoose] = useState('All');
   const [message, setMessage] = useState(false);
   const [user, setUser] = useState(true);
+  const [userState, setUserState] = useState(false);
 
   function keyDownHandler (e) {
     if(e.key==='Enter') {
@@ -141,6 +142,9 @@ function App() {
   const mainContent = useRef(null);
   useEffect(()=> {
     const modeHead = document.querySelector('.mode');
+    if(window.localStorage.getItem('userState')) {
+      setUserState(true);
+    }
     if(modeHead) {
       if(!window.localStorage.getItem('mode')) window.localStorage.setItem('mode', 'dark');
       if(window.localStorage.getItem('mode')) {
@@ -187,7 +191,8 @@ function App() {
     let fullTime = `${h}:${min}:${s}`;
     try {
       if(target.previousElementSibling.value==='') {
-        console.log('please enter your name')
+        console.log('please enter your name');
+        setUserState(false);
       }else {
         fetch(SERVER_URL_API+'/user.json', {
           method:'POST',
@@ -197,7 +202,9 @@ function App() {
           body: JSON.stringify({name: target.previousElementSibling.value.toUpperCase(), date: fullDate, time: fullTime})
         });
         setUser(false);
-        window.localStorage.setItem('username', target.previousElementSibling.value)
+        window.localStorage.setItem('username', target.previousElementSibling.value);
+        setUserState(true);
+        window.localStorage.setItem('userState', true)
       }
     } catch (err) {
       console.log(err);
@@ -215,10 +222,10 @@ function App() {
             message === true ? <HandleMessage onClick={()=> setMessage(false)}/> : null
           }
           <div className='bgcolor'></div>
-          <Header onClick={handleClickMode} modeSetted={mode}>
+          {userState===true ? <Header onClick={handleClickMode} modeSetted={mode}>
             <Input  onKeyDown={keyDownHandler} onClick={updateActive}/>
-          </Header>
-          <div className='container mode'>
+          </Header>:null}
+          {userState===true ? <div className='container mode'>
             <Todo 
             data={{c: count, todos: todolist}} 
             updateHandler={updateCompleted} 
@@ -226,7 +233,7 @@ function App() {
             onClick={onClickHandleFilter}
             />
             <Filter onClick={onClickHandleFilter}/>
-          </div>
+          </div>:null}
           <p className='drag_message'>
             Drag Up and drop to reorder list
           </p>
