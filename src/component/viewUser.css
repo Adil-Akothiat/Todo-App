@@ -21,6 +21,6 @@ td {
     font-size: 12px;
     color: #000;
 }
-tr:nth-child(even) {
+tr:not(tr:first-child) {
     background: linear-gradient(to right,hsl(192, 100%, 67%) , hsl(280, 87%, 65%));
 }
