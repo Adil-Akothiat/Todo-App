@@ -10,6 +10,67 @@ body {
   font-size: 18px;
   color: #fff;
   transition: all 500ms ease;
+  position: relative;
+}
+.user {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 100%;
+  min-height: 100%;
+  z-index: 10000;
+}
+.user_info {
+  position: absolute;
+  background-color: #fff;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  color: #25273C;
+  padding: 40px 20px;
+  width: 350px;
+  text-align: center;
+  border-radius: 5px;
+}
+.blurbg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  background: linear-gradient(to right,hsl(192, 100%, 67%) , hsl(280, 87%, 65%));
+  min-height: 100%;
+  min-width: 100%;
+}
+@media screen and (max-width: 350px) {
+  .user_info {
+    width: 350px;
+    left: 0;
+    top:100px;
+    transform: translate(0, 0);
+  }
+  .blurbg {
+    min-width: 350px;
+  }
+}
+@media screen and (min-width: 600px) {
+  .user_info {
+    width: 550px;
+  }
+}
+.user_info h2{
+  font-size: 22px;
+  margin-bottom: 15px;
+}
+.user_info input {
+  width: 100%;
+  padding: 10px 20px;
+  caret-color: #4B70C6;
+  color: #4B70C6;
+  outline: none;
+  border: 1px solid #bebebe;
+  border-radius: 5px;
 }
 .message {
   position: absolute;
@@ -52,6 +113,7 @@ body {
   font-weight: 700;
   line-height: 1.6;
 }
+.user_info button,  
 .card button {
   outline: none;
   cursor: pointer;

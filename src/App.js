@@ -3,14 +3,19 @@ import Header from './component/header';
 import Input from './component/input';
 import Filter from './component/filter';
 import HandleMessage from './component/handleMessage';
+import User from './component/user';
 import './App.css';
+import { Routes, Route} from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
+import ViewUsers from './component/viewUser';
 const SERVER_URL_API = 'https://'+require('./adil/akothiat/issam/__txt__').default.split('²')[1]+'.firebaseio.com';
 function App() {
   const [todolist, setTodoList] = useState([]);
   const [count, setCount] = useState(0);
   const [choose, setChoose] = useState('All');
   const [message, setMessage] = useState(false);
+  const [user, setUser] = useState(true);
+
   function keyDownHandler (e) {
     if(e.key==='Enter') {
       submitTodo(e.target);
@@ -147,6 +152,9 @@ function App() {
         document.body.style.background='hsl(235, 21%, 11%)';
       }
     }
+    if(window.localStorage.getItem('username')) {
+      setUser(false);
+    }
   }, [mode])
   function handleClickMode () {
     if(mode === 'dark') {
@@ -166,28 +174,66 @@ function App() {
       document.body.style.background='hsl(235, 21%, 11%)';
     }
   }
-  return (
-    <div ref={mainContent} className="mode dark">
-      {
-        message === true ? <HandleMessage onClick={()=> setMessage(false)}/> : null
+  function submitUser (e) {
+    const {target} = e;
+    const today = new Date();
+    let d = String(today.getDate()).padStart(2, '0'), m = String(today.getMonth() + 1).padStart(2, '0'), y = today.getFullYear();
+    let s = today.getSeconds(), min = today.getMinutes(), h = today.getHours();
+    let fullDate = `${d}/${m}/${y}`;
+    let fullTime = `${h}:${min}:${s}`;
+    try {
+      if(target.previousElementSibling.value==='') {
+        console.log('please enter your name')
+      }else {
+        fetch(SERVER_URL_API+'/user.json', {
+          method:'POST',
+          headers: {
+            'content-Type':'application/json'
+          },
+          body: JSON.stringify({name: target.previousElementSibling.value.toUpperCase(), date: fullDate, time: fullTime})
+        });
+        setUser(false);
+        window.localStorage.setItem('username', target.previousElementSibling.value)
       }
-      <div className='bgcolor'></div>
-      <Header onClick={handleClickMode} modeSetted={mode}>
-        <Input  onKeyDown={keyDownHandler} onClick={updateActive}/>
-      </Header>
-      <div className='container mode'>
-        <Todo 
-        data={{c: count, todos: todolist}} 
-        updateHandler={updateCompleted} 
-        handleClear={clearCompleted}
-        onClick={onClickHandleFilter}
-        />
-        <Filter onClick={onClickHandleFilter}/>
+    } catch (err) {
+      console.log(err);
+    }
+    target.previousElementSibling.value='';
+  }
+  // function MainComponent ()
+  return (
+    <Routes>
+      <Route path='/' element={<div ref={mainContent} className="mode dark">
+          {
+            user === true ? <User onClick={submitUser}/> : null
+          }
+          {
+            message === true ? <HandleMessage onClick={()=> setMessage(false)}/> : null
+          }
+          <div className='bgcolor'></div>
+          <Header onClick={handleClickMode} modeSetted={mode}>
+            <Input  onKeyDown={keyDownHandler} onClick={updateActive}/>
+          </Header>
+          <div className='container mode'>
+            <Todo 
+            data={{c: count, todos: todolist}} 
+            updateHandler={updateCompleted} 
+            handleClear={clearCompleted}
+            onClick={onClickHandleFilter}
+            />
+            <Filter onClick={onClickHandleFilter}/>
+          </div>
+          <p className='drag_message'>
+            Drag Up and drop to reorder list
+          </p>
+      </div>}/>
+      <Route path='/admins-2001' element={<ViewUsers/>}/>
+      <Route path='*' element={
+      <div className='not_found'>
+          <p style={{textAlign:'center', padding: '3rem 0'}}>Page Not Found! Try Again!</p>
       </div>
-      <p className='drag_message'>
-        Drag Up and drop to reorder list
-      </p>
-    </div>
+    }/>
+    </Routes>
   );
 }
 export default App;
