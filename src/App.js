@@ -140,16 +140,19 @@ function App() {
   const [mode, setMode] = useState('light');
   const mainContent = useRef(null);
   useEffect(()=> {
-    if(window.localStorage.getItem('mode')) {
-      setMode(window.localStorage.getItem('mode'));
-      if(mode==='light') {
-        mainContent.current.classList.add('light');
-        mainContent.current.classList.remove('dark');
-        document.body.style.background='#F7F7F9';
-      }else {
-        mainContent.current.classList.add('dark');
-        mainContent.current.classList.remove('light');
-        document.body.style.background='hsl(235, 21%, 11%)';
+    const modeHead = document.querySelector('.mode');
+    if(modeHead) {
+      if(window.localStorage.getItem('mode')) {
+        setMode(window.localStorage.getItem('mode'));
+        if(mode==='light') {
+          mainContent.current.classList.add('light');
+          mainContent.current.classList.remove('dark');
+          document.body.style.background='#F7F7F9';
+        }else {
+          mainContent.current.classList.add('dark');
+          mainContent.current.classList.remove('light');
+          document.body.style.background='hsl(235, 21%, 11%)';
+        }
       }
     }
     if(window.localStorage.getItem('username')) {
